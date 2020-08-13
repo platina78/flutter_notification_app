@@ -1,8 +1,21 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
-  runApp(MyApp());
+  try {
+    if (Platform.isAndroid || Platform.isIOS) runApp(MyApp());
+  } catch (e) {
+    runApp(DummyApp());
+  }
+}
+
+class DummyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(body: Text('')));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +31,19 @@ class Notification extends StatefulWidget {
   final String title;
 
   @override
-  createState() => _NotificationState();
+  State<StatefulWidget> createState() {
+    if (Platform.isWindows)
+      return _DummyState();
+    else
+      return _NotificationState();
+  }
+}
+
+class _DummyState extends State<Notification> {
+  @override
+  Widget build(BuildContext context) {
+    return null;
+  }
 }
 
 class _NotificationState extends State<Notification> {
@@ -72,13 +97,11 @@ class _NotificationState extends State<Notification> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Notification Basic',
-              ),
-            ],
+          child: SafeArea(
+            child: WebView(
+              initialUrl: 'http://1.11.171.16:8088/RippleShop',
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
