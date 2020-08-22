@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 void main() {
   try {
@@ -68,17 +69,11 @@ class _NotificationState extends State<Notification> {
         .initialize(initializationSettings); //세팅 값 설정
   }
 
-  
-
   Future _showNotification() async {
     //Detail에는 icon이나 push 알람이 일어났을 때의 알람소리등의 디테일 부분을 설정
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '앱 아이디?',
-      '앱 이름',
-      '앱의 주소',
-      importance: Importance.Max,
-      priority: Priority.High
-    );
+        '앱 아이디?', '앱 이름', '앱의 주소',
+        importance: Importance.Max, priority: Priority.High);
 
     var iosPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
@@ -94,7 +89,6 @@ class _NotificationState extends State<Notification> {
       platformChannelSpecifics,
       payload: 'Notification Test',
     );
-
   }
 
   @override
@@ -116,6 +110,18 @@ class _NotificationState extends State<Notification> {
           onPressed: _showNotification,
           tooltip: 'Increment',
           child: Icon(Icons.access_alarms),
+        ),
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Colors.blueAccent,
+          items: <Widget>[
+            Icon(Icons.add, size: 30),
+            Icon(Icons.list, size: 30),
+            Icon(Icons.compare_arrows, size: 30),
+          ],
+          animationDuration:const Duration(milliseconds: 300),
+          onTap: (index) {
+              print(index);
+          },
         ),
       ),
     );
