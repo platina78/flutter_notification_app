@@ -95,9 +95,6 @@ class _NotificationState extends State<Notification> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
         body: Center(
           child: SafeArea(
             child: WebView(
@@ -114,14 +111,17 @@ class _NotificationState extends State<Notification> {
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.blueAccent,
           items: <Widget>[
-            Icon(Icons.add, size: 30),
-            Icon(Icons.list, size: 30),
-            Icon(Icons.compare_arrows, size: 30),
+            Icon(Icons.add, size: 25),
+            Icon(Icons.list, size: 25),
+            Icon(Icons.person, size: 25),
+            Icon(Icons.chat_bubble,size:25),
           ],
           animationDuration:const Duration(milliseconds: 300),
           onTap: (index) {
               print(index);
           },
+          animationCurve:Curves.easeOut,
+          height:55.0,
         ),
       ),
     );
